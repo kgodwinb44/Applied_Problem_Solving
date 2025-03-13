@@ -1,0 +1,81 @@
+def LargestFriendGroup(N, M, connections):
+    # Build the graph using a dictionary
+    graph = {i: set() for i in range(N)}
+    
+    # Add connections to the graph
+    for i in range(0, len(connections), 2):
+        person1 = connections[i]
+        person2 = connections[i + 1]
+        graph[person1].add(person2)
+        graph[person2].add(person1)
+    
+    # Find connected components using iterative DFS
+    visited = set()
+    max_group_size = 0
+    
+    for person in range(N):
+        if person not in visited:
+            # Start a new group
+            current_size = 0
+            stack = [person]
+            
+            while stack:
+                current = stack.pop()
+                if current not in visited:
+                    visited.add(current)
+                    current_size += 1
+                    # Add unvisited friends to stack
+                    for friend in graph[current]:
+                        if friend not in visited:
+                            stack.append(friend)
+            
+            max_group_size = max(max_group_size, current_size)
+    
+    return max_group_size
+
+def DegreeOfSeparation(N, M, connections, person1, person2):
+    # Build the graph using a dictionary
+    graph = {i: set() for i in range(N)}
+    
+    # Add connections to the graph
+    for i in range(0, len(connections), 2):
+        p1 = connections[i]
+        p2 = connections[i + 1]
+        graph[p1].add(p2)
+        graph[p2].add(p1)
+    
+    # If the same person, return 0
+    if person1 == person2:
+        return 0
+    
+    # BFS to find shortest path
+    visited = {person1}
+    queue = [(person1, 0)]  # (person, degree)
+    
+    while queue:
+        current, degree = queue.pop(0)
+        
+        # Check if we found the target person
+        if current == person2:
+            return degree
+        
+        # Add all unvisited friends to queue
+        for friend in graph[current]:
+            if friend not in visited:
+                visited.add(friend)
+                queue.append((friend, degree + 1))
+    
+    # If we get here, no path exists
+    return -1
+
+N = 10
+M = 8
+connections = [9, 3, 9, 7, 2, 1, 8, 9, 4, 0, 6, 0, 0, 2, 3, 5]
+
+print(LargestFriendGroup(N, M, connections))
+
+# Test different cases
+print(DegreeOfSeparation(N, M, connections, 0, 0))  # Same person
+print(DegreeOfSeparation(N, M, connections, 0, 1))  # Direct connection
+print(DegreeOfSeparation(N, M, connections, 0, 9))  # Indirect connection
+print(DegreeOfSeparation(N, M, connections, 0, 5))  # No connection

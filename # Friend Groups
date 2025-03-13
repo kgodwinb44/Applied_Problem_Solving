@@ -1,0 +1,60 @@
+import math
+import os
+import random
+import re
+import sys
+
+def LargestFriendGroup(N, M, connections):
+    # Build the graph using a dictionary
+    graph = {i: set() for i in range(N)}
+    
+    # Add connections to the graph
+    for i in range(0, len(connections), 2):
+        person1 = connections[i]
+        person2 = connections[i + 1]
+        graph[person1].add(person2)
+        graph[person2].add(person1)
+    
+    # Find connected components using iterative DFS
+    visited = set()
+    max_group_size = 0
+    
+    for person in range(N):
+        if person not in visited:
+            # Start a new group
+            current_size = 0
+            stack = [person]
+            
+            while stack:
+                current = stack.pop()
+                if current not in visited:
+                    visited.add(current)
+                    current_size += 1
+                    # Add unvisited friends to stack
+                    for friend in graph[current]:
+                        if friend not in visited:
+                            stack.append(friend)
+            
+            max_group_size = max(max_group_size, current_size)
+    
+    return max_group_size
+
+N = 10
+M = 8
+connections = [9, 3, 9, 7, 2, 1, 8, 9, 4, 0, 6, 0, 0, 2, 3, 5]
+
+print(LargestFriendGroup(N, M, connections))
+
+N = 10
+M = 8
+connections = [9, 3, 9, 7, 2, 1, 8, 9, 4, 0, 6, 0, 0, 2, 3, 5]
+
+print(LargestFriendGroup(N, M, connections))
+
+N = 10
+M = 8
+connections = [9, 3, 9, 7, 2, 1, 8, 9, 4, 0, 6, 0, 0, 2, 3, 5]
+
+print(LargestFriendGroup(N, M, connections))
+
+
