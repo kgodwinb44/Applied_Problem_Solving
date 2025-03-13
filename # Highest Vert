@@ -1,0 +1,41 @@
+import math
+import os
+import random
+import re
+import sys
+
+# N Number of vertices
+# M number of edges
+# Connections
+
+def MaxDegreeVertex(N, M, connections):
+    
+    degree = {}
+    vertex = []
+    
+    # Store the value to the degree dictionary
+    for i in connections:
+        num = i
+        count = connections.count(num)
+        degree[num] = count
+    
+    # Variable which stores the highest degree
+    max_degree = max(degree.values())
+
+    # Store the vertex with the highest degree
+    for key, value in degree.items():
+        if value == max_degree:
+            vertex.append(key)
+    
+    # Return the minimum vertex
+    return min(vertex)
+         
+    
+N = 20
+M = 15
+connections = [13, 18, 7, 17, 12, 9, 14, 3, 14, 9, 12, 1, 12, 14, 14, 15, 18, 15, 3, 15, 6, 18, 7, 10, 0, 17, 18, 0, 13, 1]
+
+print(MaxDegreeVertex(N, M, connections))
+    
+    
+        
