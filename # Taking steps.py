@@ -1,4 +1,18 @@
-# Taking steps
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'TakeSteps' function below.
+#
+# The function is expected to return an INTEGER.
+# The function accepts following parameters:
+#  1. INTEGER nArray
+#  2. INTEGER nSteps
+#  3. STRING_ARRAY grid
+#
 
 def TakeSteps(nArray, nSteps, grid):
     # Write your code here
@@ -8,7 +22,6 @@ def TakeSteps(nArray, nSteps, grid):
     
     while i < nSteps:
         move = grid[y][x]
-        print(grid)
         
         if move == '>':
             x += 1
@@ -20,8 +33,12 @@ def TakeSteps(nArray, nSteps, grid):
             y += 1
         i += 1
     return nArray * y + x
-       
-nArrray = 8
-nSteps = 25
-grid = ['>>>v>>>v', '^v<v^v<<', '^v^>^>>v', '^v^<<<<<', '^>>v>>>v', '^<<v^v<<', '>>^>^>>v', '^<<<<<<<']
-print(TakeSteps(nArrray, nSteps, grid))
+
+nArray = 128
+nSteps = 10
+grid = [
+    '^v^v^v<>^v<<<v<>^v<<<v<<<v<<^<v<<<v<^v^v^>^v^>^v^<v<<<<>^v^v^v<v',
+    '^>^>^v^v<>>v^v^v<>>v^>>v^>>>>^>v>^>>^>^>^v<>^v<>>^>v>>^v<>^>^v^v',
+    '^>^>^v^v<>>v^v^v<>>v^>>v^>>>>^>v>^>>^>^>^v<>^v<>>^>v>>^v<>^>^v^v'
+    ]
+TakeSteps(nArray,nSteps,grid)
